@@ -28,8 +28,7 @@ Adafruit_BicolorMatrix matrix = Adafruit_BicolorMatrix();
 void setup() {
   Serial.begin(9600);
   Serial.println("8x8 LED Matrix Test");
-  
-  matrix.begin(0x70);  // pass in the address
+  // matrix.begin(0x70);  // pass in the address
 }
 
 static const uint8_t PROGMEM
@@ -63,60 +62,258 @@ static const uint8_t PROGMEM
 
 void loop() {
 
-  matrix.clear();
-  matrix.drawBitmap(0, 0, smile_bmp, 8, 8, LED_GREEN);
-  matrix.writeDisplay();
-  delay(500);
+  Serial.println("----");
 
-  matrix.clear();
-  matrix.drawBitmap(0, 0, neutral_bmp, 8, 8, LED_YELLOW);
-  matrix.writeDisplay();
-  delay(500);
+  // Read the analog value
+  int moistureLevel = 3;
 
-  matrix.clear();
-  matrix.drawBitmap(0, 0, frown_bmp, 8, 8, LED_RED);
-  matrix.writeDisplay();
-  delay(500);
+  switch(moistureLevel)
+  {
+    case 1:
+      // enough water
+      drawSmiley(1, true, 1);
+      delay(500);
 
-  matrix.clear();      // clear display
-  matrix.drawPixel(0, 0, LED_GREEN);  
-  matrix.writeDisplay();  // write the changes we just made to the display
-  delay(500);
+      drawSmiley(10, true, 1);
+      delay(500);
 
-  matrix.clear();
-  matrix.drawLine(0,0, 7,7, LED_YELLOW);
-  matrix.writeDisplay();  // write the changes we just made to the display
-  delay(500);
+      drawSmiley(1, true, 1);
+      delay(500);
 
-  matrix.clear();
-  matrix.drawRect(0,0, 8,8, LED_RED);
-  matrix.fillRect(2,2, 4,4, LED_GREEN);
-  matrix.writeDisplay();  // write the changes we just made to the display
-  delay(500);
+      drawSmiley(10, true, 4);
+      delay(500);
+ 
+      break;
 
-  matrix.clear();
-  matrix.drawCircle(3,3, 3, LED_YELLOW);
-  matrix.writeDisplay();  // write the changes we just made to the display
-  delay(500);
+    case 2:
+      // medium water
+      drawSmiley(1, true, 2);
+      delay(800);
+ 
+      drawSmiley(1, false, 2);
+      delay(500);
 
-  matrix.setTextWrap(false);  // we dont want text to wrap so it scrolls nicely
-  matrix.setTextSize(1);
-  matrix.setTextColor(LED_GREEN);
-  for (int8_t x=7; x>=-36; x--) {
-    matrix.clear();
-    matrix.setCursor(x,0);
-    matrix.print("Hello");
-    matrix.writeDisplay();
-    delay(100);
+      break;
+
+    case 3:
+      // Not enough water
+      drawSmiley(1, true, 3);
+      delay(800);
+
+      drawSmiley(1, false, 3);
+      delay(500);
+ 
+      break;
+
+    default:
+
+      break;
+
+  }  
+
+
+}
+
+
+void drawSmiley(int eyes, bool eyesOpened, int mouth) {
+  // Draw the smiley with eyes and mouth definition
+
+  uint8_t smiley[8];
+  //matrix.clear(); // First of clear the matrix
+
+  if(eyes == 1 && mouth == 1 && eyesOpened)
+  {
+    Serial.println("😀");
   }
-  matrix.setRotation(3);
-  matrix.setTextColor(LED_RED);
-  for (int8_t x=7; x>=-36; x--) {
-    matrix.clear();
-    matrix.setCursor(x,0);
-    matrix.print("World");
-    matrix.writeDisplay();
-    delay(100);
+  else if(eyes == 1 && mouth == 2 && eyesOpened)
+  {
+    Serial.println("😐");
   }
-  matrix.setRotation(0);
+  else if(eyes == 1 && mouth == 2 && !eyesOpened)
+  {
+    Serial.println("😑");
+  }
+  else if(eyes == 1 && mouth == 3 && eyesOpened)
+  {
+    Serial.println("🙁");
+  }
+  else if(eyes == 1 && mouth == 3 && !eyesOpened)
+  {
+    Serial.println("😔");
+  }
+  else if(eyes == 10 && mouth == 1 && eyesOpened)
+  {
+    Serial.println("😉");
+  }
+  else if(eyes == 10 && mouth == 4 && eyesOpened)
+  {
+    Serial.println("😘");
+  }
+
+
+  switch (eyes)
+  {
+    case 1:
+      // center_center
+      smiley[0] = B00000000;
+      if (eyesOpened)
+      {
+        smiley[1] = B01100110;
+      }
+      smiley[2] = B01100110;
+      smiley[3] = B00000000;
+      break;
+
+    case 2:
+      // center_left
+      smiley[0] = B00000000;
+      if (eyesOpened)
+      {
+        smiley[1] = B11001100;
+      }
+      smiley[2] = B11001100;
+      smiley[3] = B00000000;
+      break;
+
+    case 3:
+      // center_right
+      smiley[0] = B00000000;
+      if (eyesOpened)
+      {
+        smiley[1] = B00110011;
+      }
+      smiley[2] = B00110011;
+      smiley[3] = B00000000;
+      break;
+
+    case 4:
+      // center_up
+      if (eyesOpened)
+      {
+        smiley[0] = B01100110;
+      }
+      smiley[1] = B01100110;
+      smiley[2] = B00000000;
+      smiley[3] = B00000000;
+      break;
+
+    case 5:
+      // left_up
+      if (eyesOpened)
+      {
+        smiley[0] = B11001100;
+      }
+      smiley[1] = B11001100;
+      smiley[2] = B00000000;
+      smiley[3] = B00000000;
+      break;
+
+    case 6:
+      // right_up
+      if (eyesOpened)
+      {
+        smiley[0] = B00110011;
+      }
+      smiley[1] = B00110011;
+      smiley[2] = B00000000;
+      smiley[3] = B00000000;
+      break;
+
+
+    case 7:
+      // center_down
+      smiley[0] = B00000000;
+      smiley[1] = B00000000;
+      if (eyesOpened)
+      {
+        smiley[2] = B01100110;
+      }
+      smiley[3] = B01100110;
+      break;
+
+    case 8:
+      // left_down
+      smiley[0] = B00000000;
+      smiley[1] = B00000000;
+      if (eyesOpened)
+      {
+        smiley[2] = B11001100;
+      }
+      smiley[3] = B11001100;
+      break;
+
+    case 9:
+      // center_down
+      smiley[0] = B00000000;
+      smiley[1] = B00000000;
+      if (eyesOpened)
+      {
+        smiley[2] = B00110011;
+      }
+      smiley[3] = B00110011;
+      break;
+
+    case 10:
+      // center right blink
+      smiley[0] = B00000000;
+      smiley[1] = B00000000;
+      smiley[2] = B00110000;
+      smiley[3] = B00110011;
+      break;
+
+    default:
+      // confused_opened
+      smiley[0] = B00110000;
+      smiley[1] = B00110110;
+      smiley[2] = B00000110;
+      smiley[3] = B00000000;
+      break;
+  }
+
+  switch (mouth)
+  {
+    case 1:
+      // Smile
+      smiley[4] = B00000000;
+      smiley[5] = B01000010;
+      smiley[6] = B00111100;
+      smiley[7] = B00000000;
+      break;
+
+    case 2:
+      // ----
+      smiley[4] = B00000000;
+      smiley[5] = B00000000;
+      smiley[6] = B01111110;
+      smiley[7] = B00000000;
+      break;
+
+    case 3:
+      // Sad
+      smiley[4] = B00000000;
+      smiley[5] = B00111100;
+      smiley[6] = B01000010;
+      smiley[7] = B00000000;
+      break;
+
+    case 4:
+      // Kiss
+      smiley[4] = B00010101;
+      smiley[5] = B00001110;
+      smiley[6] = B00010101;
+      smiley[7] = B00000000;
+      break;
+
+    default:
+      // confused_opened
+      smiley[4] = B00000000;
+      smiley[5] = B01000000;
+      smiley[6] = B00011000;
+      smiley[7] = B00000010;
+      break;
+  }
+
+  //matrix.drawBitmap(0, 0, smiley, 8, 8, LED_GREEN); // Set the requested layout on the Matrix
+  //matrix.writeDisplay(); // Draw the matrix
+
 }

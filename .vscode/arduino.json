@@ -1,0 +1,6 @@
+{
+    "board": "arduino:avr:micro",
+    "port": "/dev/cu.usbmodem101",
+    "programmer": "arduino:arduinoasisp",
+    "sketch": "Software/PlantBuddy/PlantBuddy.ino"
+}

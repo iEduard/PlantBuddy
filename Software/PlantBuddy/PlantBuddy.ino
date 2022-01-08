@@ -39,9 +39,9 @@ void loop() {
   soilMoistureValue = analogRead(A0);
   Serial.println(soilMoistureValue);
   // Read the analog value
-  int moistureLevel = 2;
+  int moistureLevel = 1;
 
-  if((600 > soilMoistureValue) & (soilMoistureValue > 430)M){
+  if((600 > soilMoistureValue) & (soilMoistureValue > 430)){
     moistureLevel = 2; // Dry
   }
   else if((430 > soilMoistureValue) & (soilMoistureValue > 350)){
@@ -50,7 +50,7 @@ void loop() {
   else if((350 > soilMoistureValue) & (soilMoistureValue > 0)){  
     moistureLevel = 3; // Water
   }
-
+moistureLevel = 1;
   switch(moistureLevel)
   {
     case 1:

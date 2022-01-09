@@ -82,6 +82,11 @@ moistureLevel = 1;
         drawSmiley(1, false, 1, 300);
         drawSmiley(1, true, 1, 300);
         drawSmiley(11, true, 4, 700); // Kiss
+
+        drawHeart(2, 300); // Blink with an heart two times
+        drawHeart(1, 300);
+        drawHeart(2, 300);
+        drawHeart(1, 300);        
       }
 
       drawSmiley(1, true, 1, 500);
@@ -144,6 +149,53 @@ moistureLevel = 1;
 
 }
 
+void drawHeart(int heartSize,  int delayTime){
+
+  uint8_t heart[8];
+  matrix.clear(); // First of clear the matrix
+
+
+  switch (heartSize)
+  {
+  case 1:
+    // Large heart 
+    heart[0] = B00000000;
+    heart[1] = B01100110;
+    heart[2] = B11111111;
+    heart[3] = B11111111;
+    heart[4] = B11111111;
+    heart[5] = B01111110;
+    heart[6] = B00111100;
+    heart[7] = B00011000;
+
+    break;
+
+  case 2:
+    // Smal heart
+    heart[0] = B00000000;
+    heart[1] = B00000000;
+    heart[2] = B00101000;
+    heart[3] = B01111100;
+    heart[4] = B01111100;
+    heart[5] = B00111000;
+    heart[6] = B00010000;
+    heart[7] = B00000000;
+
+    break;
+
+  default:
+    break;
+  }
+
+
+  matrix.drawBitmap(0, 0, heart, 8, 8, LED_RED); // Set the requested layout on the Matrix
+  matrix.writeDisplay(); // Draw the matrix
+
+  // Delay the next step   
+  delay(delayTime);
+
+
+}
 
 void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
   // Draw the smiley with eyes and mouth definition

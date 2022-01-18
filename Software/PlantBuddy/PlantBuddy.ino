@@ -83,10 +83,11 @@ moistureLevel = 1;
         drawSmiley(1, true, 1, 300);
         drawSmiley(11, true, 4, 700); // Kiss
 
-        drawHeart(2, 300); // Blink with an heart two times
+        drawHeart(2, 500); // Blink with an heart two times
         drawHeart(1, 300);
         drawHeart(2, 300);
-        drawHeart(1, 300);        
+        drawHeart(1, 300);
+        drawHeart(2, 500);        
       }
 
       drawSmiley(1, true, 1, 500);

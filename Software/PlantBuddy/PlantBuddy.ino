@@ -22,24 +22,65 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include "Adafruit_LEDBackpack.h"
+#include <BH1750.h>
+#include "DHT.h"
 
 Adafruit_BicolorMatrix matrix = Adafruit_BicolorMatrix();
+BH1750 lightMeter;
+DHT dht(12, DHT22);
+
 int soilMoistureValue = 0;
 long randNumber;
 long randDelay;
+
+
+
+int DebugLevel = 10; // Debug level for the serial output
+
+int state = 0; // State of the Statemachine
+
+// Setup
 void setup() {
   Serial.begin(9600);
   Serial.println("8x8 LED Matrix Test");
-  matrix.begin(0x70);  // pass in the address
+  matrix.begin(0x70);  // start the led matrix
+  lightMeter.begin(); // start the light sensor
+  dht.begin();  // start the tem sensor
 }
 
+// Main loop
 void loop() {
 
-  Serial.println("----");
-  soilMoistureValue = analogRead(A0);
-  Serial.println(soilMoistureValue);
-  // Read the analog value
-  int moistureLevel = 1;
+  // Read the sensor values
+
+  soilMoistureValue = analogRead(A0); // Read the moisture sensor
+  float lux = lightMeter.readLightLevel(); // Read the light sensor 
+  float hunidity = dht.readHumidity(); // Read the Humidity
+  float temperature = dht.readTemperature(); // Read temperature as Celsius (the default)
+
+
+  //Debug output
+
+  if(DebugLevel > 0){
+    Serial.println("----");
+    Serial.println(soilMoistureValue); 
+
+    Serial.print("Light: ");
+    Serial.print(lux); 
+    Serial.println("[LUX]");
+
+    Serial.print("Humidity: ");
+    Serial.print(hunidity); 
+    Serial.println("[%]");
+
+    Serial.print("Temperature: ");
+    Serial.print(temperature); 
+    Serial.println("[°C]");
+  }
+
+
+  int moistureLevel = 1; 
+
 
   if((600 > soilMoistureValue) & (soilMoistureValue > 430)){
     moistureLevel = 2; // Dry
@@ -50,11 +91,35 @@ void loop() {
   else if((350 > soilMoistureValue) & (soilMoistureValue > 0)){  
     moistureLevel = 3; // Water
   }
-moistureLevel = 1;
-  switch(moistureLevel)
+
+  moistureLevel = 1;
+
+  switch (state)
   {
-    case 1:
-      // enough water
+    case 0: // Init state
+      state++;
+      break;
+
+    case 1: // Idle State
+
+      // Check if it is dark
+      if (lux < 1){
+        state = 70;
+      }
+      else if(moistureLevel == 1){
+        state = 10;
+      }
+      else if(moistureLevel == 2){
+        state = 20;
+      }
+      else if(moistureLevel == 3){
+        state = 30;
+      }
+
+      break; 
+
+    case 10: // enough water
+
       randDelay = random(2500, 4000);
       drawSmiley(1, true, 1, int(randDelay));
 
@@ -62,7 +127,7 @@ moistureLevel = 1;
 
       if(randNumber < 50){
         // Blink with the eyes         
-        drawSmiley(1, false, 1, 300);
+        drawSmiley(1, false, 1, 300); //Close both eyes
       }
       else if(randNumber < 60){
         drawSmiley(2, true, 1, 400);
@@ -92,10 +157,11 @@ moistureLevel = 1;
 
       drawSmiley(1, true, 1, 500);
  
+      state = 1;
       break;
 
-    case 2:
-      // medium water
+    case 20: // medium water
+
       randDelay = random(2500, 4000);
       drawSmiley(1, true, 2, int(randDelay));
 
@@ -132,20 +198,93 @@ moistureLevel = 1;
       }
 
       drawSmiley(1, true, 2, 500);
+
+      state = 1;
       break;
 
-    case 3:
-      // To much Water
+    case 30: // To much Water
       randDelay = random(2500, 4000);
       drawSmiley(1, true, 3, int(randDelay));
       drawSmiley(1, false, 3, 300);
+      
+      state = 1;
       break;
+
+    case 70: // Get to sleep
+
+      drawSmiley(1, false, 1, 800); //Close both eyes
+      drawSmiley(1, true , 1, 200); //Open both eyes
+      drawSmiley(1, false, 1, 800); //Close both eyes
+      drawSmiley(11, true, 1, 400); //Open one eye
+
+      drawSmiley(1, false, 5, 600); //Close both eyes
+      drawSmiley(1, false, 2, 600); //Close both eyes
+
+      drawSmiley(1, false, 5, 600); //Close both eyes
+      //drawSmiley(1, false, 2, 1200); //Close both eyes
+
+      drawSmiley(1, false, 8, 200); //Close both eyes
+      drawSmiley(1, false, 9, 200); //Close both eyes      
+      drawSmiley(1, false, 8, 200); //Close both eyes
+      drawSmiley(1, false, 9, 200); //Close both eyes      
+
+
+      drawSmiley(1, false, 5, 1200); //Close both eyes
+
+      //drawSmiley(1, false, 2, 1200); //Close both eyes
+      drawSmiley(1, false, 8, 200); //Close both eyes
+      drawSmiley(1, false, 9, 200); //Close both eyes      
+      drawSmiley(1, false, 8, 200); //Close both eyes
+      drawSmiley(1, false, 9, 200); //Close both eyes
+      drawSmiley(1, false, 2, 300); //Close both eyes
+
+      state++;
+      break;
+
+    case 71: // sleeping
+    
+      matrix.clear(); // Clear the matrix to turn of the lights
+      uint8_t emptyArray[8];
+      emptyArray[0] = 0;
+      emptyArray[1] = 0;
+      emptyArray[2] = 0;
+      emptyArray[3] = 0;
+      emptyArray[4] = 0;
+      emptyArray[5] = 0;
+      emptyArray[6] = 0;
+      emptyArray[7] = 0;
+      matrix.drawBitmap(0, 0, emptyArray, 8, 8, LED_GREEN); // Set the requested layout on the Matrix
+      matrix.writeDisplay(); // Draw the matrix
+
+      // Wait for the light
+      if(lux > 10){
+        state++;
+      }
+
+      break;
+
+    case 72: // Wake up
+
+
+      drawSmiley(1, false, 5, 1400); //Close both eyes moan
+      drawSmiley(1, false, 2, 500); //Close both eyes flat mouth
+      drawSmiley(11, true, 2, 600); //Open one eyes flat mouth
+      drawSmiley(1, false, 2, 600); //Close both eyes flat mouth
+      drawSmiley(1, true , 2, 200); //Open both eyes smile
+      drawSmiley(1, false , 2, 200); //Open both eyes smile
+      drawSmiley(1, true , 2, 200); //Open both eyes smile
+      drawSmiley(1, false , 1, 200); //Open both eyes smile
+
+
+      state = 1;
+      break;
+
 
     default:
-
+      state = 1;
       break;
+  }
 
-  }  
 
 
 }
@@ -351,8 +490,8 @@ void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
     case 2:
       // ----
       smiley[4] = B00000000;
-      smiley[5] = B00000000;
-      smiley[6] = B01111110;
+      smiley[5] = B01111110;
+      smiley[6] = B00000000;
       smiley[7] = B00000000;
       break;
 
@@ -395,6 +534,23 @@ void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
       smiley[6] = B01111110;
       smiley[7] = B00001100;
       break;
+
+    case 8:
+      // ----
+      smiley[4] = B00101000;
+      smiley[5] = B01111110;
+      smiley[6] = B00010100;
+      smiley[7] = B00000000;
+      break;
+
+    case 9:
+      // ----
+      smiley[4] = B00010100;
+      smiley[5] = B01111110;
+      smiley[6] = B00101000;
+      smiley[7] = B00000000;
+      break;
+
 
     default:
       // confused_opened

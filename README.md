@@ -7,6 +7,23 @@ Buddy that helps you out with your plants
 - Arduino Nano
 - Capacitive moisture sensor
 - 8x8 Bicolor LED matrix 
+- BH1750 Digital light sensor
+
+
+### Light Sensor
+
+The Fritzing file was downloaded here:
+http://omnigatherum.ca/wp/?p=338
+
+Library reference
+https://www.arduino.cc/reference/en/libraries/bh1750/
+
+
+### Temp Humidity Sensor
+
+Using the DHT Library
+
+Examples here: https://learn.adafruit.com/dht/using-a-dhtxx-sensor
 
 ## Software
 
@@ -14,5 +31,11 @@ Buddy that helps you out with your plants
 
 ### Install Dependencies
 
-> pip install adafruit-circuitpython-ht16k33
+
+
+
+
+
+
+
 

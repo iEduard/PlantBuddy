@@ -25,9 +25,17 @@
 #include <BH1750.h>
 #include "DHT.h"
 
+#define echoPin 10 // attach pin D2 Arduino to pin Echo of HC-SR04
+#define trigPin 11 //attach pin D3 Arduino to pin Trig of HC-SR04
+
+
 Adafruit_BicolorMatrix matrix = Adafruit_BicolorMatrix();
 BH1750 lightMeter;
 DHT dht(12, DHT22);
+
+
+long duration; // variable for the duration of sound wave travel
+int distance; // variable for the distance measurement
 
 int soilMoistureValue = 0;
 long randNumber;
@@ -42,7 +50,11 @@ int state = 0; // State of the Statemachine
 // Setup
 void setup() {
   Serial.begin(9600);
-  Serial.println("8x8 LED Matrix Test");
+  Serial.println("Plant Budy Debug output");
+
+  pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
+  pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
+
   matrix.begin(0x70);  // start the led matrix
   lightMeter.begin(); // start the light sensor
   dht.begin();  // start the tem sensor
@@ -59,8 +71,21 @@ void loop() {
   float temperature = dht.readTemperature(); // Read temperature as Celsius (the default)
 
 
-  //Debug output
+  
+  digitalWrite(trigPin, LOW);// Clears the trigPin condition
+  delayMicroseconds(2);
+  
+  digitalWrite(trigPin, HIGH);// Sets the trigPin HIGH (ACTIVE) for 10 microseconds
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+ 
+  duration = pulseIn(echoPin, HIGH);// Reads the echoPin, returns the sound wave travel time in microseconds
 
+  // Calculating the distance
+  distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
+
+
+  //Debug output
   if(DebugLevel > 0){
     Serial.println("----");
     Serial.println(soilMoistureValue); 
@@ -76,6 +101,12 @@ void loop() {
     Serial.print("Temperature: ");
     Serial.print(temperature); 
     Serial.println("[°C]");
+
+    // Displays the distance on the Serial Monitor
+    Serial.print("Distance: ");
+    Serial.print(distance);
+    Serial.println(" cm");
+
   }
 
 

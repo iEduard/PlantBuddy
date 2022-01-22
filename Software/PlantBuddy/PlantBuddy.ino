@@ -1,22 +1,11 @@
 /*************************************************** 
-  This is a library for our I2C LED Backpacks
+  The coolest Robot to check your plants
+    He will read the soil Moisture
+    Temperature
+    Hunidity
+    Light
 
-  Designed specifically to work with the Adafruit LED Matrix backpacks 
-  ----> http://www.adafruit.com/products/872
-  ----> http://www.adafruit.com/products/871
-  ----> http://www.adafruit.com/products/870
-
-  These displays use I2C to communicate, 2 pins are required to 
-  interface. There are multiple selectable I2C addresses. For backpacks
-  with 2 Address Select pins: 0x70, 0x71, 0x72 or 0x73. For backpacks
-  with 3 Address Select pins: 0x70 thru 0x77
-
-  Adafruit invests time and resources providing this open source code, 
-  please support Adafruit and open-source hardware by purchasing 
-  products from Adafruit!
-
-  Written by Limor Fried/Ladyada for Adafruit Industries.  
-  BSD license, all text above must be included in any redistribution
+  To check hof good you treate your plant
  ****************************************************/
 
 #include <Wire.h>
@@ -90,22 +79,10 @@ void loop() {
     Serial.println("----");
     Serial.println(soilMoistureValue); 
 
-    Serial.print("Light: ");
-    Serial.print(lux); 
-    Serial.println("[LUX]");
-
-    Serial.print("Humidity: ");
-    Serial.print(hunidity); 
-    Serial.println("[%]");
-
-    Serial.print("Temperature: ");
-    Serial.print(temperature); 
-    Serial.println("[°C]");
-
-    // Displays the distance on the Serial Monitor
-    Serial.print("Distance: ");
-    Serial.print(distance);
-    Serial.println(" cm");
+    // Serial.print("Light: " + String(lux) + "[LUX]" );
+    // Serial.print("Humidity: " + String(hunidity) + "[%]");
+    // Serial.print("Temperature: " + String(temperature) + "[°C]");
+    // Serial.print("Distance: "+String(distance) + "[cm]");
 
   }
 
@@ -371,45 +348,35 @@ void drawHeart(int heartSize,  int delayTime){
 void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
   // Draw the smiley with eyes and mouth definition
 
-  uint8_t smiley[8];
+  uint8_t smiley[] = {0,0,0,0,0,0,0,0};
   matrix.clear(); // First of clear the matrix
 
   switch (eyes)
   {
     case 1:
       // center_center
-      smiley[0] = B00000000;
       if (eyesOpened){
         smiley[1] = B01100110;
       }
-      else{
-        smiley[1] = B00000000;
-      }
-
       smiley[2] = B01100110;
-      smiley[3] = B00000000;
       break;
 
     case 2:
       // center_left
-      smiley[0] = B00000000;
       if (eyesOpened)
       {
         smiley[1] = B11001100;
       }
       smiley[2] = B11001100;
-      smiley[3] = B00000000;
       break;
 
     case 3:
       // center_right
-      smiley[0] = B00000000;
       if (eyesOpened)
       {
         smiley[1] = B00110011;
       }
       smiley[2] = B00110011;
-      smiley[3] = B00000000;
       break;
 
     case 4:
@@ -419,8 +386,8 @@ void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
         smiley[0] = B01100110;
       }
       smiley[1] = B01100110;
-      smiley[2] = B00000000;
-      smiley[3] = B00000000;
+      smiley[2] = 0;
+      smiley[3] = 0;
       break;
 
     case 5:
@@ -430,8 +397,6 @@ void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
         smiley[0] = B11001100;
       }
       smiley[1] = B11001100;
-      smiley[2] = B00000000;
-      smiley[3] = B00000000;
       break;
 
     case 6:
@@ -441,15 +406,11 @@ void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
         smiley[0] = B00110011;
       }
       smiley[1] = B00110011;
-      smiley[2] = B00000000;
-      smiley[3] = B00000000;
       break;
 
 
     case 7:
       // center_down
-      smiley[0] = B00000000;
-      smiley[1] = B00000000;
       if (eyesOpened)
       {
         smiley[2] = B01100110;
@@ -459,8 +420,6 @@ void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
 
     case 8:
       // left_down
-      smiley[0] = B00000000;
-      smiley[1] = B00000000;
       if (eyesOpened)
       {
         smiley[2] = B11001100;
@@ -470,8 +429,6 @@ void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
 
     case 9:
       // center_down
-      smiley[0] = B00000000;
-      smiley[1] = B00000000;
       if (eyesOpened)
       {
         smiley[2] = B00110011;
@@ -481,8 +438,6 @@ void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
 
     case 10:
       // right_down
-      smiley[0] = B00000000;
-      smiley[1] = B00000000;
       if (eyesOpened)
       {
         smiley[2] = B00110011;
@@ -493,10 +448,8 @@ void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
 
     case 11:
       // center right blink
-      smiley[0] = B00000000;
       smiley[1] = B01100000;
       smiley[2] = B01100110;
-      smiley[3] = B00000000;
       break;
 
     default:
@@ -504,7 +457,6 @@ void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
       smiley[0] = B00110000;
       smiley[1] = B00110110;
       smiley[2] = B00000110;
-      smiley[3] = B00000000;
       break;
   }
 
@@ -512,26 +464,19 @@ void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
   {
     case 1:
       // Smile
-      smiley[4] = B00000000;
       smiley[5] = B01000010;
       smiley[6] = B00111100;
-      smiley[7] = B00000000;
       break;
 
     case 2:
       // ----
-      smiley[4] = B00000000;
       smiley[5] = B01111110;
-      smiley[6] = B00000000;
-      smiley[7] = B00000000;
       break;
 
     case 3:
       // Sad
-      smiley[4] = B00000000;
       smiley[5] = B00111100;
       smiley[6] = B01000010;
-      smiley[7] = B00000000;
       break;
 
     case 4:
@@ -539,7 +484,6 @@ void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
       smiley[4] = B00001010;
       smiley[5] = B00000100;
       smiley[6] = B00001010;
-      smiley[7] = B00000000;
       break;
 
     case 5:
@@ -547,12 +491,10 @@ void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
       smiley[4] = B00111100;
       smiley[5] = B01000010;
       smiley[6] = B00111100;
-      smiley[7] = B00000000;
       break;
 
     case 6:
       // Tongue_out
-      smiley[4] = B00000000;
       smiley[5] = B01000010;
       smiley[6] = B00111100;
       smiley[7] = B00001100;
@@ -560,32 +502,27 @@ void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
 
     case 7:
       // Tongue_out flaot mouth
-      smiley[4] = B00000000;
-      smiley[5] = B00000000;
       smiley[6] = B01111110;
       smiley[7] = B00001100;
       break;
 
     case 8:
-      // ----
+      // -±-±-
       smiley[4] = B00101000;
       smiley[5] = B01111110;
       smiley[6] = B00010100;
-      smiley[7] = B00000000;
       break;
 
     case 9:
-      // ----
+      // ±-±-
       smiley[4] = B00010100;
       smiley[5] = B01111110;
       smiley[6] = B00101000;
-      smiley[7] = B00000000;
       break;
 
 
     default:
       // confused_opened
-      smiley[4] = B00000000;
       smiley[5] = B01000000;
       smiley[6] = B00011000;
       smiley[7] = B00000010;

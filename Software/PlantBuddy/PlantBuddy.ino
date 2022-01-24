@@ -2,10 +2,10 @@
   The coolest Robot to check your plants
     He will read the soil Moisture
     Temperature
-    Hunidity
+    Humidity
     Light
 
-  To check hof good you treate your plant
+  To check how good you treat your plant
  ****************************************************/
 
 #include <Wire.h>
@@ -63,15 +63,12 @@ void loop() {
   
   digitalWrite(trigPin, LOW);// Clears the trigPin condition
   delayMicroseconds(2);
-  
   digitalWrite(trigPin, HIGH);// Sets the trigPin HIGH (ACTIVE) for 10 microseconds
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
  
   duration = pulseIn(echoPin, HIGH);// Reads the echoPin, returns the sound wave travel time in microseconds
-
-  // Calculating the distance
-  distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
+  distance = duration * 0.034 / 2; // Calculating the distance // Speed of sound wave divided by 2 (go and back)
 
 
   //Debug output
@@ -79,16 +76,14 @@ void loop() {
     Serial.println("----");
     Serial.println(soilMoistureValue); 
 
-    // Serial.print("Light: " + String(lux) + "[LUX]" );
+    Serial.print("Light: " + String(lux) + "[LUX]" );
     // Serial.print("Humidity: " + String(hunidity) + "[%]");
     // Serial.print("Temperature: " + String(temperature) + "[°C]");
     // Serial.print("Distance: "+String(distance) + "[cm]");
 
   }
 
-
   int moistureLevel = 1; 
-
 
   if((600 > soilMoistureValue) & (soilMoistureValue > 430)){
     moistureLevel = 2; // Dry
@@ -293,21 +288,17 @@ void loop() {
       break;
   }
 
-
-
 }
 
 void drawHeart(int heartSize,  int delayTime){
 
-  uint8_t heart[8];
+  uint8_t heart[8] = {0,0,0,0,0,0,0,0};;
   matrix.clear(); // First of clear the matrix
-
 
   switch (heartSize)
   {
   case 1:
     // Large heart 
-    heart[0] = B00000000;
     heart[1] = B01100110;
     heart[2] = B11111111;
     heart[3] = B11111111;
@@ -315,34 +306,26 @@ void drawHeart(int heartSize,  int delayTime){
     heart[5] = B01111110;
     heart[6] = B00111100;
     heart[7] = B00011000;
-
     break;
 
   case 2:
     // Smal heart
-    heart[0] = B00000000;
-    heart[1] = B00000000;
     heart[2] = B00101000;
     heart[3] = B01111100;
     heart[4] = B01111100;
     heart[5] = B00111000;
     heart[6] = B00010000;
-    heart[7] = B00000000;
-
     break;
 
   default:
     break;
   }
 
-
   matrix.drawBitmap(0, 0, heart, 8, 8, LED_RED); // Set the requested layout on the Matrix
   matrix.writeDisplay(); // Draw the matrix
 
   // Delay the next step   
   delay(delayTime);
-
-
 }
 
 void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
@@ -386,8 +369,6 @@ void drawSmiley(int eyes, bool eyesOpened, int mouth, int delayTime) {
         smiley[0] = B01100110;
       }
       smiley[1] = B01100110;
-      smiley[2] = 0;
-      smiley[3] = 0;
       break;
 
     case 5:

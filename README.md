@@ -1,3 +1,13 @@
+# Raspberry Pi
+
+
+Try this MATRIX LED Lib to control the led field faster
+
+https://github.com/smittytone/HT16K33-Python
+
+
+# Arduino
+
 # PlantBuddy
 
 Buddy that helps you out with your plants

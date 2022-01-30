@@ -6,6 +6,18 @@ from enum import Enum
 class Emoji(Enum):
     HEART_SMALL = 1
     HEART_BIG = 2
+    SMILE_LOOK_CENTER = 3
+    SMILE_LOOK_LEFT = 4
+    SMILE_LOOK_RIGHT = 5
+    SMILE_BLINK = 6
+    KISS = 7
+
+
+class Animation(Enum):
+    HEART_BEAT = 1
+    LOOK_LEFT_RIGHT_BLINK = 2
+    LOOK_LEFT_RIGHT_KISS = 3
+
 
 class PlantBuddy():
 
@@ -23,95 +35,119 @@ class PlantBuddy():
         self.matrix = HT16K33MatrixColour(i2c)
         #matrix[row, coloumn]
         
-        print("Hello World")
+        print("Start")
 
         #Clear
-        self.matrix.clear().draw()
-        time.sleep(0.9)
+        self.__animation(Animation.LOOK_LEFT_RIGHT_KISS)
+
+        #self.__animation(Animation.HEART_BEAT)
+
+        print("Done")
 
 
-        #Fill LED
-        #matrix.fill(matrix.COLOUR_YELLOW).draw()
-        #time.sleep(0.9)
-
-        # Clear the display
-        #matrix.clear().draw()
-        #time.sleep(0.9)
-
-        #Fill LED
-        #matrix.fill(matrix.COLOUR_GREEN).draw()
-        #time.sleep(0.9)
-
-        # Clear the display
-        #matrix.clear().draw()
-        #time.sleep(0.9)
-
-        #Fill LED
-        #matrix.fill(matrix.COLOUR_RED).draw()
-        #time.sleep(0.9)
-
-        #for x in range(8):
-        #    matrix.plot(x, 0).plot(x, 7)
-        #for y in range(1,7):
-        #    matrix.plot(0, y).plot(7, y)
-
-        self.matrix.clear()
-        self.matrix.plot(1, 1).plot(1, 2).plot(2, 1).plot(2, 2).draw()
-        time.sleep(0.3)
-
-        self.matrix.clear()
-        self.matrix.plot(1, 0).plot(1, 1).plot(2, 0).plot(2, 1).draw()
-        time.sleep(0.3)    
-
-        self.matrix.clear()
-        self.matrix.plot(1, 1).plot(1, 2).plot(2, 1).plot(2, 2).draw()
-        time.sleep(0.3)
-
-        self.matrix.clear()
-        self.matrix.plot(1, 1).plot(1, 2).plot(2, 1).plot(2, 2).draw()
-        time.sleep(0.3)
-
-        self.matrix.clear()
-        self.matrix.plot(1, 0).plot(1, 1).plot(2, 0).plot(2, 1).draw()
-        time.sleep(0.3)    
-
-        self.matrix.clear()
-        self.matrix.plot(1, 1).plot(1, 2).plot(2, 1).plot(2, 2).draw()
-        time.sleep(0.3)
-
-
-        #matrix.draw()
-
-        #matrix.plot(1, 1, matrix.COLOUR_GREEN).draw()
-        self.matrix.clear()
-
-        print("Hello Raspberry Pi")
-
-
-    def __drawEmoji(self, emoji):
+    def __drawEmoji(self, emoji:Emoji):
         """
         Draw the requested emoji
         """
 
         #Clear the display
+        self.matrix.clear()
 
+        #Clear the icon 
+        icon = b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 
         #Define the emoji
         if (Emoji.HEART_SMALL == emoji):
 
-            self.matrix.plot(1, 1, self.matrix.COLOUR_RED).draw()
+            icon = b"\x00\x00\x00\x18\x00\x3C\x00\x1E\x00\x3C\x00\x18\x00\x00\x00\x00" 
+            self.matrix.set_icon(icon)
 
         elif (Emoji.HEART_BIG == emoji):
-            self.matrix.plot(1, 1, self.matrix.COLOUR_RED).draw()
+
+            icon = b"\x00\x30\x00\x78\x00\x7C\x00\x3E\x00\x3E\x00\x7C\x00\x78\x00\x30" 
+            self.matrix.set_icon(icon)
+
+        elif (Emoji.SMILE_LOOK_CENTER == emoji):
+
+            icon = b"\x00\x00\x64\x00\x62\x00\x02\x00\x02\x00\x62\x00\x64\x00\x00\x00"
+            self.matrix.set_icon(icon)
+
+        elif (Emoji.SMILE_LOOK_LEFT == emoji):
+
+            icon = b"\x60\x00\x64\x00\x02\x00\x02\x00\x62\x00\x62\x00\x04\x00\x00\x00"
+            self.matrix.set_icon(icon)
+
+        elif (Emoji.SMILE_LOOK_RIGHT == emoji):
+
+            icon = b"\x00\x00\x04\x00\x62\x00\x62\x00\x02\x00\x02\x00\x64\x00\x60\x00"
+            self.matrix.set_icon(icon)
+
+        elif (Emoji.SMILE_BLINK == emoji):
+
+            icon =  b"\x00\x00\x24\x00\x22\x00\x02\x00\x02\x00\x22\x00\x24\x00\x00\x00"
+            self.matrix.set_icon(icon)
+
+        elif (Emoji.KISS == emoji):
+
+            icon = b"\x00\x00\x60\x00\x60\x00\x00\x00\x00\x0A\x20\x04\x20\x0A\x00\x00"
+            self.matrix.set_icon(icon)
+
 
         #Draw the emoji
         self.matrix.draw()
 
-    def __animation(self):
+    def __animation(self, animation:Animation):
         """
         Animate the given pattern with the given duration
         """
         False
+        if (Animation.HEART_BEAT == animation):
+            #Animate an Heart Beat
+            self.__drawEmoji(Emoji.HEART_SMALL)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.HEART_BIG)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.HEART_SMALL)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.HEART_BIG)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.HEART_SMALL)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.HEART_BIG)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.HEART_SMALL)
+            time.sleep(0.3)
+
+        elif (Animation.LOOK_LEFT_RIGHT_BLINK == animation):
+            self.__drawEmoji(Emoji.SMILE_LOOK_CENTER)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.SMILE_LOOK_LEFT)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.SMILE_LOOK_CENTER)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.SMILE_LOOK_RIGHT)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.SMILE_LOOK_CENTER)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.SMILE_BLINK)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.SMILE_LOOK_CENTER)
+            time.sleep(0.3)
+
+        elif (Animation.LOOK_LEFT_RIGHT_KISS == animation):
+            self.__drawEmoji(Emoji.SMILE_LOOK_CENTER)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.SMILE_LOOK_LEFT)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.SMILE_LOOK_CENTER)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.SMILE_LOOK_RIGHT)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.SMILE_LOOK_CENTER)
+            time.sleep(0.3)
+            self.__drawEmoji(Emoji.KISS)
+            time.sleep(0.3)
+            self.__animation(Animation.HEART_BEAT)
 
 if __name__ == '__main__':
 

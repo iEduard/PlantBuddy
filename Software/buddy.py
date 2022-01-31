@@ -124,9 +124,9 @@ class Buddy():
 
                     animationSelector = random.randrange(100)
 
-                    if(animationSelector < 60):
+                    if(animationSelector < 75):
                         self.__animation(Animation.RANDOM_BLINK)
-                    elif(animationSelector < 80):
+                    elif(animationSelector < 85):
                         self.__animation(Animation.LOOK_LEFT_RIGHT_TONGUE_OUT)
                     elif(animationSelector < 95):
                         self.__animation(Animation.LOOK_LEFT_RIGHT_BLINK)

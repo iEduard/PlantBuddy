@@ -30,7 +30,6 @@ class Emoji(Enum):
     FLAT_OPEND_EYES = 11
     SMILE_BLINK_TONGUE_OUT = 12
 
-
 class Animation(Enum):
     HEART_BEAT = 1
     LOOK_LEFT_RIGHT_BLINK = 2

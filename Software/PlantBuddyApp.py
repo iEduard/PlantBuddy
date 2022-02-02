@@ -26,14 +26,12 @@ class PlantBuddyApp():
         
         print("Start")
         self.buddy.run()
-
-
+        self.plant.run()
         #Clear
         while self.active:
 
             #Wait untill the end of time
             False
-
 
         print("Done")
 
@@ -44,10 +42,6 @@ class PlantBuddyApp():
         Should be running in an seperated thread
         All the transitions between the state will be done here
         """
-
-
-
-
 
         if(self.state == BuddyState.INIT):
             #Do init stuff

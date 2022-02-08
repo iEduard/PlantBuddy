@@ -1,5 +1,5 @@
 from enum import Enum
-import board
+import board    
 import adafruit_dht
 import time
 import threading

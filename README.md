@@ -47,9 +47,9 @@ But still needs the blinka library from Adafruit
 The Fritzing file was downloaded here:
 http://omnigatherum.ca/wp/?p=338
 
-Interresting Library found here: [Link](https://gist.github.com/oskar456/95c66d564c58361ecf9f)
+Library found here: [Link](https://gist.github.com/oskar456/95c66d564c58361ecf9f)
 
-Alternative will be from adafruit here: [Link](https://learn.adafruit.com/adafruit-bh1750-ambient-light-sensor/python-circuitpython)
+Will be used with the SMBUS Library
 
 ### Temp Humidity Sensor
 

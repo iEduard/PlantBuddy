@@ -5,7 +5,6 @@ import random
 import buddy
 import plant
 
-
 class PlantBuddyApp():
 
 
@@ -18,7 +17,7 @@ class PlantBuddyApp():
         #init the Buddy 
         self.buddy = buddy.Buddy(self.i2c)
 
-        self.plant = plant.Plant()
+        self.plant = plant.Plant(self.i2c)
 
     def run(self):
 

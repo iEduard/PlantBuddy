@@ -15,9 +15,14 @@ Buddy that helps you out with your plants
 ### Moisture sensor
 
 Capacitive moisture sensor with an analog output.
-
+Here is a tutorial from the net.
+https://www.switchdoc.com/2020/06/tutorial-capacitive-moisture-sensor-grove/
 
 ### Distance sensor
+
+In order to dedect presence we will use the ultrasonic sensor.
+Here is a tutorial from the net:
+https://tutorials-raspberrypi.de/entfernung-messen-mit-ultraschallsensor-hc-sr04/
 
 
 

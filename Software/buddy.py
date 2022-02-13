@@ -43,8 +43,11 @@ class Animation(Enum):
 class Buddy():
 
 
-    def __init__(self, i2c:board.I2C, **kwargs):
+    def __init__(self, i2c:board.I2C, plant:plant, **kwargs):
         """Class init"""
+
+
+        self._plant = plant
 
         self.matrix = HT16K33MatrixColour(i2c)
         
@@ -92,8 +95,7 @@ class Buddy():
         All the transitions between the state will be done here
         """
         while not (self.state == State.EXIT):
-
-
+            
             if(self.state == State.INIT):
 
                 print("State == Init")

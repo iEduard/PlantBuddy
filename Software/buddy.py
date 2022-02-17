@@ -4,7 +4,7 @@ import threading
 import time
 from enum import Enum
 import random
-import plant
+from environment import Environment
 
 
 
@@ -43,11 +43,8 @@ class Animation(Enum):
 class Buddy():
 
 
-    def __init__(self, i2c:board.I2C, plant:plant, **kwargs):
+    def __init__(self, i2c:board.I2C, **kwargs):
         """Class init"""
-
-
-        self._plant = plant
 
         self.matrix = HT16K33MatrixColour(i2c)
         
@@ -65,7 +62,7 @@ class Buddy():
 
         print("Buddy is up and awake")
 
-    def updateState(self, state:plant.State):
+    def updateState(self, state:State):
         """
         Send the Plant State to the plant buddy
         ----

@@ -18,7 +18,7 @@ class State(Enum):
     DRAWNING = 3
 
 
-class Plant():
+class Environment():
 
     def __init__(self, i2c:board.I2C, **kwargs):
         """
@@ -39,7 +39,7 @@ class Plant():
 
     def run(self):
         """
-        Startin the plan observation with all the sensors
+        Get the environment data
         """
         self._readSensors = True
 
@@ -49,6 +49,7 @@ class Plant():
 
     def __sensorDeamon(self):
         """
+        Read all the sensor values at once and store them to parameters
         """
         while self._readSensors:
             try:

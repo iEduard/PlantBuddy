@@ -2,8 +2,8 @@ import board
 import time
 from enum import Enum
 import random
-import buddy
-import plant
+from buddy import Buddy
+from environment import Environment
 
 class PlantBuddyApp():
 
@@ -16,9 +16,8 @@ class PlantBuddyApp():
 
         #init the Buddy 
 
-        self.plant = plant.Plant(self.i2c)
-
-        self.buddy = buddy.Buddy(self.i2c, self.plant)
+        self.environment = Environment(self.i2c)
+        self.buddy = Buddy(self.i2c)
 
 
     def run(self):
@@ -27,13 +26,13 @@ class PlantBuddyApp():
         
         print("Start")
         self.buddy.run()
-        self.plant.run()
+        self.environment.run()
         
         #Clear
         while self.active:
 
-            print("Temp: {:.1f} C    humidity: {}% ".format( self.plant.temperature, self.plant.humidity))
-            print("Light: {:.2f} lux".format(self.plant.illuminance))
+            print("Temp: {:.1f} C    humidity: {}% ".format( self.environment.temperature, self.environment.humidity))
+            print("Light: {:.2f} lux".format(self.environment.illuminance))
             time.sleep(8.0)
 
             #Wait untill the end of time
@@ -42,7 +41,8 @@ class PlantBuddyApp():
         print("Done")
 
         #Set the state back to false
-        self.plantStateSwitch = False
+        self.environmentStateSwitch = False
+
 
 if __name__ == '__main__':
 

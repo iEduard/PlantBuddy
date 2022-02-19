@@ -39,7 +39,9 @@ class Animation(Enum):
     FALL_ASLEEP = 6
     SLEEP = 7
     LOOK_LEFT_RIGHT_TONGUE_OUT = 8
-    
+    ROLE_FACE = 9
+
+
 class Buddy():
 
 
@@ -139,10 +141,6 @@ class Buddy():
         """
         Draw the requested emoji
         """
-
-        #Clear the display
-        self.matrix.clear()
-
         #Clear the icon 
         icon = b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 
@@ -182,6 +180,13 @@ class Buddy():
 
         elif(Emoji.SMILE_BLINK_TONGUE_OUT == emoji):
             icon = b"\x00\x00\x64\x00\x62\x00\x02\x00\x00\x03\x20\x03\x24\x00\x00\x00"
+
+        self.__drawIcon(icon)
+
+    def __drawIcon(self, icon):
+
+        #Clear the display
+        self.matrix.clear()
 
         self.matrix.set_icon(icon)
         #Draw the emoji
@@ -295,3 +300,68 @@ class Buddy():
             time.sleep(0.4)
             self.__drawEmoji(Emoji.SMILE_LOOK_CENTER)
             time.sleep(0.3)
+
+        elif (Animation.ROLE_FACE == animation):
+            # Role the complete face.
+
+            _sleepTime = 0.2
+
+            _icon = b"\x00\x00\x64\x00\x62\x00\x02\x00\x00\x03\x20\x03\x24\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+
+            _icon = b"\x64\x64\x62\x62\x02\x02\x02\x02\x62\x62\x64\x64\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            
+            _icon = b"\x62\x62\x02\x02\x02\x02\x62\x62\x64\x64\x00\x00\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+
+            _icon = b"\x02\x02\x02\x02\x62\x62\x64\x64\x00\x00\x00\x00\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+
+            _icon = b"\x02\x02\x62\x62\x64\x64\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+
+            _icon = b"\x62\x62\x64\x64\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+
+            _icon = b"\x64\x64\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+
+            _icon = b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(0.5)
+
+            _icon = b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x64\x64"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+
+            _icon = b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x64\x64\x62\x62"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+
+            _icon = b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x64\x64\x62\x62\x02\x02"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+
+            _icon = b"\x00\x00\x00\x00\x00\x00\x00\x00\x64\x64\x62\x62\x02\x02\x02\x02"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+
+            _icon = b"\x00\x00\x00\x00\x00\x00\x64\x64\x62\x62\x02\x02\x02\x02\x62\x62"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+
+            _icon = b"\x00\x00\x00\x00\x64\x64\x62\x62\x02\x02\x02\x02\x62\x62\x64\x64"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+
+            _icon = b"\x00\x00\x64\x00\x62\x00\x02\x00\x00\x03\x20\x03\x24\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)

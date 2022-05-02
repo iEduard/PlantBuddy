@@ -37,7 +37,6 @@ In order to improve the performance we use this Library to control the LED-Matri
 https://github.com/smittytone/HT16K33-Python
 
 With this Library we also need the blinka library from Adafruit. To install the Library you can use pip.
-But still needs the blinka library from Adafruit
 
 > sudo pip3 install adafruit-blinka
 
@@ -50,6 +49,8 @@ http://omnigatherum.ca/wp/?p=338
 Library found here: [Link](https://gist.github.com/oskar456/95c66d564c58361ecf9f)
 
 Will be used with the SMBUS Library
+
+> pip3 install smbus
 
 ### Temp Humidity Sensor
 
@@ -70,6 +71,7 @@ To Install the library use pip:
 
 The Software is written in Python. 
 
+In order to control the devices you need to enable the I2C Interface on the Raspberry Pi.
 
 ### Install Dependencies
 

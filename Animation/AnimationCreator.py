@@ -54,7 +54,7 @@ def CreateSmileyBitsHex(_icon):
 
 
 # Read the animation file
-df = pd.read_excel("./Animation.xlsx", sheet_name="RolingFace")
+df = pd.read_excel("./Animation.xlsx", sheet_name="Sweating")
 
 #create the needed objects
 smiley = []

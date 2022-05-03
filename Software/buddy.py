@@ -46,6 +46,7 @@ class Animation(Enum):
     LOOK_LEFT_RIGHT_TONGUE_OUT = 8
     ROLE_FACE = 9
     SWEATING = 10
+    FREEZING = 11
 
 
 class Buddy():
@@ -58,7 +59,7 @@ class Buddy():
         
         #Init the State machine
         self.state = State.INIT
-        self.plantState  = State.HOT #Init the plant state to normal
+        self.plantState  = State.COLD #Init the plant state to normal
 
 
     def run(self):
@@ -140,9 +141,8 @@ class Buddy():
             elif(self.state == State.COLD):
                 #To cold for the plant
                 print("State == Cold")
-                time.sleep(1)
-                False #Performe the animation for to cold
-                
+
+                self.__animation(Animation.FREEZING)               
                 self.state = State.AWAKE
             
             elif(self.state == State.HOT):
@@ -432,5 +432,73 @@ class Buddy():
             self.__drawIcon(_icon)
             time.sleep(_sleepTime)
             _icon = b"\x00\x00\x64\x00\x6A\x00\x08\x03\x08\x03\x2A\x00\x24\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+
+        elif (Animation.FREEZING == animation):
+            # Sweating face
+
+            _sleepTime = 0.1
+
+            _icon = b"\x00\x00\x64\x00\x64\x00\x04\x00\x64\x00\x64\x00\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\x00\x00\x64\x00\x64\x00\x04\x00\x64\x00\x64\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\x64\x00\x64\x00\x04\x00\x64\x00\x64\x00\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\x00\x00\x64\x00\x64\x00\x04\x00\x64\x00\x64\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\x64\x00\x64\x00\x04\x00\x64\x00\x64\x00\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\x00\x00\x64\x00\x64\x00\x04\x00\x64\x00\x64\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+
+            _sleepTime = 0.1
+            _icon = b"\x00\x00\x00\x00\x00\x00\x80\x80\x00\x00\x00\x00\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\x80\x80\x00\x00\xC0\xC0\x00\x00\x80\x80\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\x40\x40\x80\x80\xE0\xE0\x80\x80\x40\x40\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\xA0\xA0\xC0\xC0\xF0\xF0\xC0\xC0\xA0\xA0\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\x50\x50\xE0\xE0\xF8\xF8\xE0\xE0\x50\x50\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\xA8\xA8\x70\x70\xFC\xFC\x70\x70\xA8\xA8\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\x54\x54\x38\x38\xFE\xFE\x38\x38\x54\x54\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\x2A\x2A\x1C\x1C\x7F\x7F\x1C\x1C\x2A\x2A\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\x15\x15\x0E\x0E\x3F\x3F\x0E\x0E\x15\x15\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\x0A\x0A\x07\x07\x1F\x1F\x07\x07\x0A\x0A\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\x05\x05\x03\x03\x0F\x0F\x03\x03\x05\x05\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\x02\x02\x01\x01\x07\x07\x01\x01\x02\x02\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\x01\x01\x00\x00\x03\x03\x00\x00\x01\x01\x00\x00\x00\x00"
+            self.__drawIcon(_icon)
+            time.sleep(_sleepTime)
+            _icon = b"\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00"
             self.__drawIcon(_icon)
             time.sleep(_sleepTime)

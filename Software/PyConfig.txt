@@ -1,3 +1,5 @@
 adafruit-circuitpython-dht
 smbus
 adafruit-blinka
+ads1015==0.0.8 
+i2cdevice==0.0.7

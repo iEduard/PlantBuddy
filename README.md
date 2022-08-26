@@ -10,13 +10,18 @@ Buddy that helps you out with your plants
 - 8x8 Bicolor LED matrix [shop](https://www.reichelt.de/entwicklerboards-zweifarbige-led-matrix-debo-led-matrix-p235472.html?&nbc=1)
 - BH1750 Digital light sensor [shop](https://www.reichelt.de/entwicklerboards-digitaler-lichtsensor-bh1750-debo-bh-1750-p224217.html?&nbc=1)
 - Moisture Sensor 
-
+- Analog to Digital Converter [shop](https://shop.pimoroni.com/products/ads1015-adc-breakout?variant=27859155026003)
 
 ### Moisture sensor
 
 Capacitive moisture sensor with an analog output.
 Here is a tutorial from the net.
 https://www.switchdoc.com/2020/06/tutorial-capacitive-moisture-sensor-grove/
+
+#### ADC Converter
+
+In order to use the capacitive sensor with the raspberry pi zero we need analog to digital converter.
+Library and examples for the dac board can be found here [LibDoku](https://github.com/pimoroni/ads1015-python)
 
 ### Distance sensor
 

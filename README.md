@@ -85,3 +85,14 @@ In order to control the devices you need to enable the I2C Interface on the Rasp
 
 
 
+
+
+# Data aggregation
+
+Data will be read from the Xiaomi Plant Sensor.
+
+## 
+
+Required Software:
+
+> brew install postgresql@14

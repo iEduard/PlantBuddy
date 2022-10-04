@@ -3,3 +3,6 @@ smbus
 adafruit-blinka
 ads1015==0.0.8 
 i2cdevice==0.0.7
+
+#Database connection
+psycopg2==2.9.3 #TimeScale DB connection

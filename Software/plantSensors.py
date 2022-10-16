@@ -44,8 +44,9 @@ class PlantSensors():
 		"""
 		self.readSensors = True
 
+		#If no settings file passed use a default setting
 		if settingsPath == "":
-			settingsPath = str(pathlib.Path().resolve()) + "/Settings/PlantSensors.json"
+			settingsPath = str(pathlib.Path(__file__).parent.resolve()) + "/Settings/PlantSensors.json"
 
 
 		# Systemd Service Notifications - https://github.com/bb4242/sdnotify

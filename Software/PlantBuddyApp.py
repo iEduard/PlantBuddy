@@ -18,7 +18,7 @@ class PlantBuddyApp():
         #init the Buddy 
 
         #self.environment = Environment(self.i2c)
-        self.plantSensors = PlantSensors("./Settings/PlantSensors.json")
+        self.plantSensors = PlantSensors()
         #self.buddy = Buddy(self.i2c)
 
 

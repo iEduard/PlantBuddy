@@ -4,7 +4,7 @@
 
  [Service]
  Type=idle  
- ExecStart=/home/pi/repo/PlantBuddy/env/bin/python /home/pi/repo/PlantBuddy/Software/PlantBuddyApp.py  
+ ExecStart=/home/pi/repo/PlantBuddy/env/bin/python -E /home/pi/repo/PlantBuddy/Software/PlantBuddyApp.py  
  User=pi  
 
  [Install]  

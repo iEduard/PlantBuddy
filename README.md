@@ -91,8 +91,16 @@ In order to control the devices you need to enable the I2C Interface on the Rasp
 
 Data will be read from the Xiaomi Plant Sensor.
 
-## 
+## Required Software
 
-Required Software:
+To install PostgresSQL on MacOS with brew use:
 
-> brew install postgresql@14
+```sh
+brew install postgresql@14
+```
+
+To install PostgresSql on the Raspberry Pi use:
+
+```sh
+sudo su postgres
+```

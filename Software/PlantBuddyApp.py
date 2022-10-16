@@ -4,6 +4,7 @@ from enum import Enum
 import random
 from buddy import Buddy
 from environment import Environment
+from plantSensors import PlantSensors
 
 class PlantBuddyApp():
 
@@ -16,7 +17,8 @@ class PlantBuddyApp():
 
         #init the Buddy 
 
-        self.environment = Environment(self.i2c)
+        #self.environment = Environment(self.i2c)
+        self.plantSensors = PlantSensors("./Settings/PlantSensors.json")
         self.buddy = Buddy(self.i2c)
 
 
@@ -26,13 +28,14 @@ class PlantBuddyApp():
         
         print("Start")
         self.buddy.run()
-        self.environment.run()
+        self.plantSensors.run()
+        #self.environment.run()
         
         #Clear
         while self.active:
 
-            print("Temp: {:.1f} C    humidity: {}% ".format( self.environment.temperature, self.environment.humidity))
-            print("Light: {:.2f} lux".format(self.environment.illuminance))
+            #print("Temp: {:.1f} C    humidity: {}% ".format( self.environment.temperature, self.environment.humidity))
+            #print("Light: {:.2f} lux".format(self.environment.illuminance))
             time.sleep(8.0)
 
             #Wait untill the end of time

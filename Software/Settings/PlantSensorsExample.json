@@ -1,0 +1,32 @@
+{
+    "general" : {
+        "adapter" : "hci0" 
+    },
+
+    "deamon" : {
+        "enabled" : true,
+        "period" : 90
+    },
+
+    "database": {
+        "user" : "YOUR-USER",
+        "password" : "YOUR-PASSWORD",
+        "server" : "YOUR-IP-OR-HOST-NAME",
+        "port" : "YOUR-PORT",
+        "database" : "YOUR-DB"
+    },
+
+    "sensors" :[
+        {
+            "name" : "PlantName1",
+            "mac" : "MAC-ADDR",
+            "id" : 1
+        },
+        {
+            "name" : "PlantName2",
+            "mac" : "MAC-ADDR",
+            "id" : 2
+        }
+    ]
+
+}

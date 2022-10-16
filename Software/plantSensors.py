@@ -16,6 +16,7 @@ import sdnotify
 import psycopg2
 from datetime import datetime, timezone
 
+## Class originated from: https://github.com/ThomDietrich/miflora-mqtt-daemon
 
 
 if False:
@@ -36,7 +37,7 @@ class PlantSensors():
 		(MI_BATTERY, dict(name="Battery", name_pretty='Sensor Battery Level', typeformat='%d', unit='%', device_class="battery", state_class="measurement"))
 	])
 
-	def __init__(self, settingsPath="") -> None:
+	def __init__(self, settingsPath="./Settings/PlantSensors.json") -> None:
 		"""
 		Initialize the class
 		"""
@@ -49,10 +50,6 @@ class PlantSensors():
 		colorama_init()
 		print(Fore.GREEN + Style.BRIGHT)
 		print(Style.RESET_ALL)
-
-		# Read the settings and validate them
-		if settingsPath == "":
-			settingsPath = "sellings.json"
 	
 		# Read the settings to an local file
 		_settings = self.__readSettings(settingsPath)
@@ -89,7 +86,6 @@ class PlantSensors():
 		#Create a task and run it // , daemon=True
 		self._sensorsDaemonThread = threading.Thread(target=self.__sensorsDaemon)
 		self._sensorsDaemonThread.start()
-
 
 	def __sensorsDaemon(self) -> None:
 		"""

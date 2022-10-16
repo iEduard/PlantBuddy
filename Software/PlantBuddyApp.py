@@ -19,7 +19,7 @@ class PlantBuddyApp():
 
         #self.environment = Environment(self.i2c)
         self.plantSensors = PlantSensors("./Settings/PlantSensors.json")
-        self.buddy = Buddy(self.i2c)
+        #self.buddy = Buddy(self.i2c)
 
 
     def run(self):
@@ -27,7 +27,7 @@ class PlantBuddyApp():
         self.active = True
         
         print("Start")
-        self.buddy.run()
+        #self.buddy.run()
         self.plantSensors.run()
         #self.environment.run()
         

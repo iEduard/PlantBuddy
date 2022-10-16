@@ -1,0 +1,11 @@
+ [Unit]
+ Description=PlantBuddy Service
+ After=multi-user.target
+
+ [Service]
+ Type=idle  
+ ExecStart=/home/pi/repo/PlantBuddy/env/bin/python /home/pi/repo/PlantBuddy/Software/PlantBuddyApp.py  
+ User=pi  
+
+ [Install]  
+ WantedBy=multi-user.target

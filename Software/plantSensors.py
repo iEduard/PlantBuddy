@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import pathlib
 import sys
 import re
 import json
@@ -37,11 +38,15 @@ class PlantSensors():
 		(MI_BATTERY, dict(name="Battery", name_pretty='Sensor Battery Level', typeformat='%d', unit='%', device_class="battery", state_class="measurement"))
 	])
 
-	def __init__(self, settingsPath="./Settings/PlantSensors.json") -> None:
+	def __init__(self, settingsPath="") -> None:
 		"""
 		Initialize the class
 		"""
 		self.readSensors = True
+
+		if settingsPath == "":
+			settingsPath = str(pathlib.Path().resolve()) + "/Settings/PlantSensors.json"
+
 
 		# Systemd Service Notifications - https://github.com/bb4242/sdnotify
 		self.sd_notifier = sdnotify.SystemdNotifier()

@@ -84,7 +84,58 @@ In order to control the devices you need to enable the I2C Interface on the Rasp
 
 
 
+# Pi Konfiguration
 
+After installing the latest Raspbian OS from RaspberryPi.org update the systenm by:
+
+sudo apt-get update
+> 
+>$ sudo apt-get upgrade
+
+## Install the requested libraries
+
+>$ pip install fritzconnection adafruit-circuitpython-mcp4725 netifaces
+
+
+## Create and start service
+
+Source: https://www.nerdynat.com/programming/2019/run-python-on-your-raspberry-pi-as-background-service/
+
+```sh
+sudo nano /lib/systemd/system/PlantBuddy.service
+```
+
+Add the text from ./Software/PlantBuddy.service
+Than change the permission
+
+```sh
+sudo chmod 644 /lib/systemd/system/PlantBuddy.service
+```
+
+Reload the system manager configuration
+
+```sh
+sudo systemctl daemon-reload
+```
+
+Start the Service
+
+```sh
+sudo systemctl start PlantBuddy.service
+```
+
+
+Enable the service to start at boot 
+
+```sh
+sudo systemctl enable PlantBuddy.service
+```
+
+So stop the service you can use
+
+```sh
+sudo systemctl stop PlantBuddy.service
+```
 
 
 # Data aggregation

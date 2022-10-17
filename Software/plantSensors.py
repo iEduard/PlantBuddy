@@ -145,31 +145,33 @@ class PlantSensors():
 				self.print_line('Result: {}'.format(json.dumps(data)))
 
 
-				#Write the Data to the Timescale DB
-				with psycopg2.connect(self.TimeScaleDB_Connection) as conn:
-					cursor = conn.cursor()
+				try:
+					#Write the Data to the Timescale DB
+					with psycopg2.connect(self.TimeScaleDB_Connection) as conn:
+						cursor = conn.cursor()
 
-					# use the cursor to interact with your database
-					sensor_id = flora["sensor_id"]
-					sensor_name  = flora["name_pretty"]
-					light_intensity = data.get("light")
-					air_temperature = data.get("temperature")
-					soil_moisture = data.get("moisture")
-					soil_conductivity = data.get("conductivity")
-					battery_level = data.get("battery")
-					sql_timestamp = datetime.now(timezone.utc)
+						# use the cursor to interact with your database
+						sensor_id = flora["sensor_id"]
+						sensor_name  = flora["name_pretty"]
+						light_intensity = data.get("light")
+						air_temperature = data.get("temperature")
+						soil_moisture = data.get("moisture")
+						soil_conductivity = data.get("conductivity")
+						battery_level = data.get("battery")
+						sql_timestamp = datetime.now(timezone.utc)
 
-					sqlStatement = (f"INSERT INTO sensor_data (time, sensor_id, sensor_name, light_intensity, air_temperature,"
-									f"soil_moisture, soil_conductivity, battery_level) VALUES (\'{sql_timestamp}\', {sensor_id}, \'{sensor_name}\', {light_intensity}," 
-									f"{air_temperature}, {soil_moisture}, {soil_conductivity}, {battery_level});")
+						sqlStatement = (f"INSERT INTO sensor_data (time, sensor_id, sensor_name, light_intensity, air_temperature,"
+										f"soil_moisture, soil_conductivity, battery_level) VALUES (\'{sql_timestamp}\', {sensor_id}, \'{sensor_name}\', {light_intensity}," 
+										f"{air_temperature}, {soil_moisture}, {soil_conductivity}, {battery_level});")
 
-					try:
+						#Execute the SQL Statement
 						cursor.execute(sqlStatement)
-					except (Exception, psycopg2.Error) as error:
-						print(error)
 
-					#Save the changes to the database
-					conn.commit()
+						#Save the changes to the database
+						conn.commit()
+
+				except (Exception, psycopg2.Error) as error:
+					print(error)
 
 				print()
 

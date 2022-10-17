@@ -1,6 +1,13 @@
 # PlantBuddy
 
-Buddy that helps you out with your plants
+Buddy that helps you out with your plants 🌱🪴
+
+## General Konzept
+
+![GeneralKonzept](./Documents/GeneralKonzept.png)
+
+### Used Equipments
+
 
 
 ## Hardware

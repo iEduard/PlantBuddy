@@ -9,10 +9,7 @@ We will use some stock plant sensors from Xiomi. They are also sold with differe
 ![GeneralKonzept](./Documents/GeneralKonzept.png)
 
 
-
-
 # Database
-
 
 ## Set up the Docker Container
 In my example i used the official Docker Container form docker-hub. To create the container i used Portainer to build a stack for the Visualization and the Database. Here is the part for the 
@@ -149,8 +146,6 @@ sudo systemctl stop PlantBuddy.service
 ```
 
 
-
-
 ## Hardware
 
 - Raspberry Pi zero [shop]()
@@ -191,6 +186,7 @@ Library found here: [Link](https://gist.github.com/oskar456/95c66d564c58361ecf9f
 Will be used with the SMBUS Library
 
 > pip3 install smbus
+
 
 ### Temp Humidity Sensor
 

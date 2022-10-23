@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+
+  #timescale DB
+  timescaledb:
+    image: timescale/timescaledb:latest-pg14
+    restart: always
+    ports:
+      - 5444:5432
+    environment:
+      POSTGRES_USER: YOUR_DB_USER
+      POSTGRES_PASSWORD: YOUR_SUPER_SECURE_PASSWORD
+      POSTGRES_DB: homedb
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - /volume1/docker/postgresql:/var/lib/postgresql/data
+  
+
+  #Install grafaana on port 3010
+  #Default username: admin
+  #Default password: admin
+  grafana:
+    image: grafana/grafana:9.1.5
+    restart: always
+    ports:
+      - 3010:3000
+    volumes:
+      - /volume1/docker/grafana:/var/lib/grafana

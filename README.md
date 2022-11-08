@@ -8,6 +8,9 @@ We will use some stock plant sensors from Xiomi. They are also sold with differe
 
 ![GeneralKonzept](./Documents/GeneralKonzept.png)
 
+## Communication
+
+![GeneralKonzept](./Documents/Communication.png)
 
 # Database
 

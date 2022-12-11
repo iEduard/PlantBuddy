@@ -55,6 +55,20 @@ SELECT create_hypertable('sensor_data', 'time');
 
 ```
 
+
+New Tables: for the better data handling
+```sql
+/* Create the Relationable Table https://docs.timescale.com/timescaledb/latest/quick-start/python/#create-a-relational-table */
+CREATE TABLE home (id SERIAL PRIMARY KEY, type VARCHAR(50), location VARCHAR(50));
+
+/* Create the Hypertable https://docs.timescale.com/timescaledb/latest/quick-start/python/#create-hypertable */
+CREATE TABLE sensor ( time TIMESTAMPTZ NOT NULL, sensor_id INTEGER, sensor_name VARCHAR(50), sensor_data JSON, FOREIGN KEY (sensor_id) REFERENCES home (id));
+
+/* Select the created Hypertable */
+SELECT create_hypertable('sensor', 'time');
+
+```
+
 # Visualization
 
 To Visualize 

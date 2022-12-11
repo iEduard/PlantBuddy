@@ -14,3 +14,4 @@ Hardware/wpa_supplicant.conf
 /env
 
 PlantSensors.json
+Settings.json

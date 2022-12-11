@@ -17,9 +17,9 @@ class PlantBuddyApp():
 
         #init the Buddy 
 
-        #self.environment = Environment(self.i2c)
+        self.environment = Environment(self.i2c)
         self.plantSensors = PlantSensors()
-        #self.buddy = Buddy(self.i2c)
+        self.buddy = Buddy(self.i2c)
 
 
     def run(self):
@@ -27,15 +27,15 @@ class PlantBuddyApp():
         self.active = True
         
         print("Start")
-        #self.buddy.run()
+        self.buddy.run()
         self.plantSensors.run()
-        #self.environment.run()
+        self.environment.run()
         
         #Clear
         while self.active:
 
-            #print("Temp: {:.1f} C    humidity: {}% ".format( self.environment.temperature, self.environment.humidity))
-            #print("Light: {:.2f} lux".format(self.environment.illuminance))
+            print("Temp: {:.1f} C    humidity: {}% ".format( self.environment.temperature, self.environment.humidity))
+            print("Light: {:.2f} lux".format(self.environment.illuminance))
             time.sleep(8.0)
 
             #Wait untill the end of time

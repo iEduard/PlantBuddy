@@ -5,6 +5,7 @@ import time
 import threading
 import smbus
 from bh1750 import BH1750
+from database import Database
 
 try:
     # Used only for typing
@@ -35,6 +36,9 @@ class Environment():
         self._temperature_c = 0.0
         self._humidity = 0.0
         self._illuminance = 0.0
+
+        #Init the Database Connection
+        self.db = Database(user="", password="", server="", port="", database="")
 
 
     def run(self):

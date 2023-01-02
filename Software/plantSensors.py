@@ -38,7 +38,7 @@ class PlantSensors():
 		(MI_BATTERY, dict(name="Battery", name_pretty='Sensor Battery Level', typeformat='%d', unit='%', device_class="battery", state_class="measurement"))
 	])
 
-	def __init__(self, settingsPath="") -> None:
+	def __init__(self, settingsPath:str="") -> None:
 		"""
 		Initialize the class
 		"""

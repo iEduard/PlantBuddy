@@ -15,3 +15,8 @@ Hardware/wpa_supplicant.conf
 
 PlantSensors.json
 Settings.json
+.DS_Store
+
+# DrawIo
+*.bkp
+

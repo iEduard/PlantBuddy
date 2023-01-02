@@ -21,7 +21,7 @@ class State(Enum):
 
 class Environment():
 
-    def __init__(self, i2c:board.I2C, **kwargs):
+    def __init__(self, i2c:board.I2C, settingsPath:str):
         """
         Constructor of the plant class
         """

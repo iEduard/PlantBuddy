@@ -105,7 +105,7 @@ brew install postgresql@14
 To install PostgresSql on the Raspberry Pi use:
 
 ```sh
-sudo su postgres
+sudo apt install postgresql
 ```
 
 
